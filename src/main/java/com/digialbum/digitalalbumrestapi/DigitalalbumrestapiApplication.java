@@ -33,6 +33,14 @@ public class DigitalalbumrestapiApplication {
 				.body(uploadImage);
 	}
 
+	@PostMapping("/text")
+	public ResponseEntity<?> uploadTextFile(@RequestParam("file")String fileContent) throws IOException {
+		String uploadImage = service.uploadTextFile(fileContent);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(uploadImage);
+	}
+	//public ResponseEntity<?> uploadTxtFile(@RequestParam("file")String)
+
 	@GetMapping("/Files/{id_no}")
 	public ResponseEntity<?> downloadImage(@PathVariable int id_no) {
 		byte[] imageData = service.downloadImage(id_no);

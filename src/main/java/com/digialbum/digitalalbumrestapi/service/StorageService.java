@@ -37,6 +37,22 @@ public class StorageService {
         return null;
     }
 
+    public String uploadTextFile(String fileContent) throws IOException {
+        ImageData fileData = repository.save(ImageData.builder()
+                .CRT_TS(ts)
+                .UPD_TS(ts)
+                .STATUS('A')
+                .file_name("tempFile.txt")
+                .filetype("text/plain")
+                .description("New File added")
+                .raw_data(ImageUtils.compressImage(fileContent.getBytes())).build()
+        );
+        if(fileData != null) {
+            return "{ \"File uploaded successfully\": \"" + "tempFile.txt" + "\" }";
+        }
+        return null;
+    }
+
     public byte[] downloadImage(int id_no) {
         Optional<ImageData> dbImageData = repository.findById(id_no);
         byte[] image = ImageUtils.decompressImage(dbImageData.get().getRaw_data());
