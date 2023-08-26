@@ -49,6 +49,13 @@ public class DigitalalbumrestapiApplication {
 				.body(uploadImage);
 	}
 
+	@DeleteMapping("/text_delete/{id_no}")
+	public ResponseEntity<?> deleteTextData(@PathVariable int id_no) throws IOException {
+		String uploadImage = service.deleteTextData(id_no);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(uploadImage);
+	}
+
 	@GetMapping("/Files/{id_no}")
 	public ResponseEntity<?> downloadImage(@PathVariable int id_no) {
 		byte[] imageData = service.downloadImage(id_no);

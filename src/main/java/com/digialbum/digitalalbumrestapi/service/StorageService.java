@@ -58,18 +58,17 @@ public class StorageService {
         fileData.setRaw_data(ImageUtils.compressImage(fileContent.getBytes()));
         fileData.setUPD_TS(ts);
         ImageData returnFileData = repository.save(fileData);
-        /*ImageData fileData = repository.save(ImageData.builder()
-                .ID(id_no)
-                .CRT_TS(ts)
-                .UPD_TS(ts)
-                .STATUS('A')
-                .file_name("tempFile.txt")
-                .filetype("text/plain")
-                .description("New File added")
-                .raw_data(ImageUtils.compressImage(fileContent.getBytes())).build()
-        );*/
         if(returnFileData != null) {
             return "{ \"File updated successfully\": \"" + "tempFile.txt" + "\" }";
+        }
+        return null;
+    }
+
+    public String deleteTextData(int id_no) throws IOException {
+        repository.deleteById(id_no);
+        boolean isPresent = repository.existsById(id_no);
+        if(!isPresent) {
+            return "{ \"File deleted successfully\": \"" + "tempFile.txt" + "\" }";
         }
         return null;
     }
