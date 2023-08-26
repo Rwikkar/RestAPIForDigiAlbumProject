@@ -53,6 +53,27 @@ public class StorageService {
         return null;
     }
 
+    public String updateTextData(int id_no, String fileContent) throws IOException {
+        ImageData fileData = repository.getReferenceById(id_no);
+        fileData.setRaw_data(ImageUtils.compressImage(fileContent.getBytes()));
+        fileData.setUPD_TS(ts);
+        ImageData returnFileData = repository.save(fileData);
+        /*ImageData fileData = repository.save(ImageData.builder()
+                .ID(id_no)
+                .CRT_TS(ts)
+                .UPD_TS(ts)
+                .STATUS('A')
+                .file_name("tempFile.txt")
+                .filetype("text/plain")
+                .description("New File added")
+                .raw_data(ImageUtils.compressImage(fileContent.getBytes())).build()
+        );*/
+        if(returnFileData != null) {
+            return "{ \"File updated successfully\": \"" + "tempFile.txt" + "\" }";
+        }
+        return null;
+    }
+
     public byte[] downloadImage(int id_no) {
         Optional<ImageData> dbImageData = repository.findById(id_no);
         byte[] image = ImageUtils.decompressImage(dbImageData.get().getRaw_data());
