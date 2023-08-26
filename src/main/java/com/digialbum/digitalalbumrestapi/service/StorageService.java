@@ -64,7 +64,7 @@ public class StorageService {
         return null;
     }
 
-    public String deleteTextData(int id_no) throws IOException {
+    public String deleteFileData(int id_no) throws IOException {
         repository.deleteById(id_no);
         boolean isPresent = repository.existsById(id_no);
         if(!isPresent) {

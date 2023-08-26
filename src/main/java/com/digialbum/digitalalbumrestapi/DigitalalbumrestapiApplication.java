@@ -49,9 +49,9 @@ public class DigitalalbumrestapiApplication {
 				.body(uploadImage);
 	}
 
-	@DeleteMapping("/text_delete/{id_no}")
-	public ResponseEntity<?> deleteTextData(@PathVariable int id_no) throws IOException {
-		String uploadImage = service.deleteTextData(id_no);
+	@DeleteMapping("/file_delete/{id_no}")
+	public ResponseEntity<?> deleteFileData(@PathVariable int id_no) throws IOException {
+		String uploadImage = service.deleteFileData(id_no);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(uploadImage);
 	}
