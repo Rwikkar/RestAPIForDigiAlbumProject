@@ -121,6 +121,11 @@ public class StorageService {
     public List<ImageData> getSpecifiedDataByDataType(String fileType, int noOfFiles) {
         //Query query = (Query) entityManager.createQuery("SELECT e FROM digital_album_data e WHERE where file_type like '" + fileType + "%' ORDER BY ID asc LIMIT " + noOfFiles + ";");
         List<ImageData> imgData = repository.findByfiletypeSpecific(fileType, noOfFiles);
+        for (int index = 0; index < imgData.size(); index++) {
+            byte[] image = ImageUtils.decompressImage(imgData.get(index).getRaw_data());
+            //byte[] image = allDataList.get(index).getRaw_data();
+            imgData.get(index).setRaw_data(image);
+        }
         return imgData;
     }
 
