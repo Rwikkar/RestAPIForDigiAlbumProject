@@ -4,7 +4,10 @@ import com.digialbum.digitalalbumrestapi.entity.ImageData;
 import com.digialbum.digitalalbumrestapi.entity.RequestDataBase64;
 import com.digialbum.digitalalbumrestapi.repository.StorageRepository;
 import com.digialbum.digitalalbumrestapi.util.ImageUtils;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +23,8 @@ import java.util.Optional;
 public class StorageService {
     @Autowired
     private StorageRepository repository;
+    @PersistenceContext
+    private EntityManager entityManager;
     private final Timestamp ts = new Timestamp(System.currentTimeMillis());
     public String uploadImage(MultipartFile file) throws IOException {
         ImageData imageData = repository.save(ImageData.builder()
@@ -111,6 +116,12 @@ public class StorageService {
             allDataList.get(index).setRaw_data(image);
         }
         return allDataList;
+    }
+
+    public List<ImageData> getSpecifiedDataByDataType(String fileType, int noOfFiles) {
+        //Query query = (Query) entityManager.createQuery("SELECT e FROM digital_album_data e WHERE where file_type like '" + fileType + "%' ORDER BY ID asc LIMIT " + noOfFiles + ";");
+        List<ImageData> imgData = repository.findByfiletypeSpecific(fileType, noOfFiles);
+        return imgData;
     }
 
     /*public ArrayList<byte[]> downloadImage() {

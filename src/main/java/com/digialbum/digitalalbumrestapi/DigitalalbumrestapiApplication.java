@@ -90,6 +90,14 @@ public class DigitalalbumrestapiApplication {
 				.body(service.getAllData(fileType));
 	}
 
+	@GetMapping("/Files/{fileType}/{noOfFiles}")
+	public ResponseEntity<?> getSpecifiedDataByDataType(@PathVariable("fileType") String fileType, @PathVariable("noOfFiles") int noOfFiles) {
+		//System.out.println(noOfFiles);
+		return ResponseEntity.status(HttpStatus.OK)
+				.contentType(MediaType.valueOf("application/json"))
+				.body(service.getSpecifiedDataByDataType(fileType, noOfFiles));
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(DigitalalbumrestapiApplication.class, args);
 	}
